@@ -1,0 +1,57 @@
+<svg width="100%" viewBox="0 0 680 380" role="img" xmlns="http://www.w3.org/2000/svg">
+<title>ask485 ranking pipeline</title>
+<style>
+  text { font-family: sans-serif; fill: #1a1a1a; }
+  .th { font-size: 14px; font-weight: 500; }
+  .ts { font-size: 12px; font-weight: 400; fill: #555; }
+  .box-gray   { fill: #f5f5f3; stroke: #bbb; }
+  .box-purple { fill: #eeedfe; stroke: #7f77dd; }
+  .box-blue   { fill: #e6f1fb; stroke: #378add; }
+  .box-amber  { fill: #faeeda; stroke: #ba7517; }
+  .box-coral  { fill: #faece7; stroke: #d85a30; }
+  .box-teal   { fill: #e1f5ee; stroke: #1d9e75; }
+</style>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+<path d="M2 1L8 5L2 9" fill="none" stroke="#888" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</marker>
+</defs>
+<text class="ts" x="340" y="22" text-anchor="middle" dominant-baseline="central">Query processing inside one Index Server</text>
+<!-- Raw query -->
+<rect class="box-gray" x="40" y="44" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="120" y="66" text-anchor="middle" dominant-baseline="central">Raw query</text>
+<text class="ts" x="120" y="84" text-anchor="middle" dominant-baseline="central">"michigan wolverine"</text>
+<line x1="200" y1="72" x2="238" y2="72" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+<!-- Tokenize -->
+<rect class="box-purple" x="240" y="44" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="320" y="66" text-anchor="middle" dominant-baseline="central">Tokenize + clean</text>
+<text class="ts" x="320" y="84" text-anchor="middle" dominant-baseline="central">lowercase, stopwords</text>
+<line x1="400" y1="72" x2="438" y2="72" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+<!-- Index lookup -->
+<rect class="box-purple" x="440" y="44" width="200" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="540" y="66" text-anchor="middle" dominant-baseline="central">Index lookup</text>
+<text class="ts" x="540" y="84" text-anchor="middle" dominant-baseline="central">fetch posting lists (AND)</text>
+<line x1="540" y1="100" x2="540" y2="138" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+<!-- TF-IDF -->
+<rect class="box-blue" x="380" y="140" width="260" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="510" y="162" text-anchor="middle" dominant-baseline="central">TF-IDF cosine similarity</text>
+<text class="ts" x="510" y="180" text-anchor="middle" dominant-baseline="central">cosSim(q,d) = q · d</text>
+<!-- PageRank -->
+<rect class="box-amber" x="40" y="140" width="160" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="120" y="162" text-anchor="middle" dominant-baseline="central">PageRank scores</text>
+<text class="ts" x="120" y="180" text-anchor="middle" dominant-baseline="central">pagerank.out</text>
+<text class="ts" x="120" y="232" text-anchor="middle">w = PageRank weight</text>
+<text class="ts" x="120" y="248" text-anchor="middle">(user-controlled slider)</text>
+<!-- Arrows to weighted score -->
+<path d="M200 196 L240 258" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none" opacity="0.8"/>
+<line x1="510" y1="196" x2="510" y2="228" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+<path d="M510 228 L420 258" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none" opacity="0.8"/>
+<!-- Weighted score -->
+<rect class="box-coral" x="240" y="260" width="300" height="56" rx="8" stroke-width="0.5"/>
+<text class="th" x="390" y="282" text-anchor="middle" dominant-baseline="central">Weighted score</text>
+<text class="ts" x="390" y="300" text-anchor="middle" dominant-baseline="central">w·PageRank + (1-w)·cosSim</text>
+<line x1="390" y1="316" x2="390" y2="346" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)" fill="none"/>
+<!-- Output -->
+<rect class="box-teal" x="240" y="348" width="300" height="24" rx="6" stroke-width="0.5"/>
+<text class="ts" x="390" y="360" text-anchor="middle" dominant-baseline="central">Sorted hits returned to Search Server</text>
+</svg>
