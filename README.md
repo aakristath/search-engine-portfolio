@@ -1,3 +1,57 @@
+# ask485 — Distributed Search Engine
+
+> A distributed, service-oriented search engine built on MapReduce indexing, TF-IDF ranking, and PageRank-weighted scoring.
+
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square)
+![Flask](https://img.shields.io/badge/Flask-2.x-lightgrey?style=flat-square)
+![Architecture](https://img.shields.io/badge/Architecture-Service--Oriented-orange?style=flat-square)
+![Purpose](https://img.shields.io/badge/Purpose-Educational-green?style=flat-square)
+
+---
+
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Quick Start](#quick-start)
+- [Usage Examples](#usage-examples)
+- [FAQ](#faq)
+- [Accessibility](#accessibility)
+- [Acknowledgements](#acknowledgements)
+
+---
+
+## Overview
+
+**ask485** is a web-based search engine that allows users to query a document collection and receive ranked results through an interactive web interface. It is designed for developers and students interested in understanding how large-scale search systems are structured — including indexing, querying, ranking, and result aggregation across multiple services.
+
+Rather than focusing on production deployment, this project emphasizes **system architecture**, **data flow**, and **search concepts** such as distributed indexing and PageRank-style ranking. It is well-suited for learning, demonstrations, and technical documentation.
+
+---
+
+## Features
+
+- **Distributed Indexing** — Documents are processed and indexed across multiple index services using a MapReduce pipeline, enabling scalable and parallel search operations.
+- **Query Aggregation** — User queries are sent to multiple index services simultaneously; partial results are merged and ranked before being returned.
+- **TF-IDF + PageRank Scoring** — Documents are ranked using a weighted combination of cosine similarity (TF-IDF) and PageRank scores. Users can adjust the PageRank influence via a slider.
+- **Interactive Search Interface** — A web-based UI allows users to submit queries and view ranked results in real time.
+- **Service-Oriented Architecture** — The system is organized into clearly defined services (index servers and search server) that communicate through well-defined REST APIs.
+
+---
+
+## Architecture
+
+ask485 uses a **three-tier service-oriented architecture**:
+
+1. The **user** submits a query through the web browser.
+2. The **Search Server** receives the query, fans it out to all Index Servers in parallel, and aggregates results.
+3. Each **Index Server** searches its own segment of the inverted index and returns scored hits.
+4. The Search Server merges all hits, applies final ranking, and returns the top 10 results.
+
+![System architecture diagram showing user, search server, and three index servers](diagram1.svg)
+
+**Ranking formula:**
+Score(query, doc, w) = w × PageRank(doc) + (1 - w) × cosSim(query, doc)
 Where `w` is the PageRank weight (0–1) set by the user, and `cosSim` is the TF-IDF cosine similarity between the query and document vectors.
 
 ![Ranking pipeline diagram showing tokenization, TF-IDF scoring, PageRank weighting, and final output](diagram2.svg)
